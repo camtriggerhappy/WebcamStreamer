@@ -6,8 +6,13 @@
   <description>TODO: Package description</description>
   <maintainer email="cameronw23@vt.edu">cameron</maintainer>
   <license>LaterIssue</license>
+  <build_depend> opencv </build_depend>
 
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
   <buildtool_depend>ament_cmake</buildtool_depend>
+  
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

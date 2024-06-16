@@ -1,12 +1,17 @@
 #include <opencv2/opencv.hpp>
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
-#include "sensor_msgs/sensor_msgs/msg/image.hpp"
-class CameraPublisher : public rclcpp::Node{
+#include "sensor_msgs/msg/image.hpp"
+class Camera{
   private:
     cv::VideoCapture camera;
-    rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr  publisher_ = this->create_publisher<sensor_msgs::msg::Image>("ImageFeed", 10);
+    int width{};
+    int height{};
+    std::string cameraName{};
+    std::string pathToCam{};
 public:
-    void publishImage();
+    cv::Mat getImage();
+    Camera(std::string pathToCam,std::string CameraName, int width, int height);
 
     };
+

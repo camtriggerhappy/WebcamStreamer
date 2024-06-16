@@ -6,12 +6,25 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # find dependencies
+
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
+find_package(cv_bridge REQUIRED)
+find_package(OpenCV REQUIRED) 
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+
+
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-add_executable(WebcamStream src/WebcamStream.cpp)
+
+include_directories(
+  include
+  ${OpenCV_INCLUDE_DIRS}
+)
+add_executable(WebcamStream src/WebcamStream.cpp src/WebcamStream.h) 
+ament_target_dependencies(WebcamStream rclcpp std_msgs OpenCV sensor_msgs cv_bridge)
 target_include_directories(WebcamStream PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
@@ -19,7 +32,9 @@ target_compile_features(WebcamStream PUBLIC c_std_99 cxx_std_17)  # Require C99 
 
 install(TARGETS WebcamStream
   DESTINATION lib/${PROJECT_NAME})
-
+  target_link_libraries(WebcamStream
+  ${OpenCV_LIBS}
+)
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
